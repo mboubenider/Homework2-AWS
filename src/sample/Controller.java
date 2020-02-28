@@ -59,17 +59,22 @@ public class Controller implements Initializable{
             catch(Exception ex){
                 System.out.println("Table already exists, not created");
             }
+
+
+            String Fname = url.equals(AWS_URL) ? "BRuce" : "Bat";
+            String Lname = url.equals(AWS_URL) ? "Wayne" : "Man";
+            String major = url.equals(AWS_URL) ? "Biology" : "None";
+            Integer age = url.equals(AWS_URL) ? 21 : 0;
+            Double gpa = url.equals(AWS_URL) ? 3.0 : 0.0;
             UUID id = UUID.randomUUID();
             String idString = id.toString();
-            String Fname = url.equals(AWS_URL) ? "Clark" : "Super";
-            String Lname = url.equals(AWS_URL) ? "Clark" : "Super";
-            String major = url.equals(AWS_URL) ? "Clark" : "Super";
-            String age = url.equals(AWS_URL) ? "Clark" : "Super";
-            String gpa = url.equals(AWS_URL) ? "Clark" : "Super";
+
 
             String sql = "INSERT INTO Student VALUES" +
-                    "('" + Fname + "', '" +Lname + "', '" + major + "','" + age + "','" + gpa + "', '" + Fname + "','" + idString +"', TRUE)";
+                    "('" + Fname + "', '" + Lname + "','" + major + "','" + age + "','" + gpa + "', '" + idString+"')";
+
             s.executeUpdate(sql);
+
             System.out.println("TABLE FILLED");
 
             s.close();
@@ -101,6 +106,19 @@ public class Controller implements Initializable{
             String sqlStatement = "SELECT Fname, Lname, major, age, gpa, id FROM Student";
             ResultSet result = s.executeQuery(sqlStatement);
             ObservableList<Student> dbStudentList = FXCollections.observableArrayList();
+            while (result.next()){
+                Student stu = new Student();
+                stu.Fname = result.getString("Fname");
+                stu.Lname = result.getString("Lname");
+                stu.major = result.getString("major");
+                stu.age = result.getInt("age");
+                stu.gpa = result.getInt("gpa");
+                stu.id = UUID.fromString(result.getString("Id"));
+                dbStudentList.add(stu);
+
+            }
+            studentListView.setItems(dbStudentList);
+
 
             System.out.println("DATA LOADED");
             s.close();
@@ -115,22 +133,15 @@ public class Controller implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle){
         createbutton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent actionEvent) {
-                createDatabase(AWS_URL);
-            }
+            public void handle(ActionEvent actionEvent) { createDatabase(AWS_URL); }
         });
         deletebutton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent actionEvent) {
-                deleteDatabase(AWS_URL);
-            }
+            public void handle(ActionEvent actionEvent) { deleteDatabase(AWS_URL); }
         });
         loadbutton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent actionEvent) {
-                loadDatabase(AWS_URL);
-            }
+            public void handle(ActionEvent actionEvent) { loadDatabase(AWS_URL); }
         });
-
     }
 }
