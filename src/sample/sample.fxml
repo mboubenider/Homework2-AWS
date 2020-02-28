@@ -1,0 +1,26 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import com.jfoenix.controls.JFXButton?>
+
+<HBox fx:controller="sample.Controller" xmlns:fx="http://javafx.com/fxml" alignment="center">
+    <HBox>
+        <children>
+            <ListView fx:id = "studentlistView"></ListView>
+        </children>
+    </HBox>
+    <VBox>
+        <Button text="CREATE DATABASE" prefWidth="150" fx:id="createbutton"/>
+        <Button text="DELETE DATABASE" prefWidth="150" fx:id="deletebutton"/>
+        <Button text="LOAD DATABASE" prefWidth="150" fx:id="loadbutton"/>
+        <Label alignment="CENTER" prefWidth="150" prefHeight="50">Filters</Label>
+
+        <JFXButton text="GPA FILTER" prefWidth="150" fx:id="gpabutton"/>
+        <JFXButton text="MAJOR FILTER" prefWidth="150" fx:id="majorbutton"/>
+        <JFXButton text="AGE FILTER" prefWidth="150" fx:id="agebutton"/>
+    </VBox>
+</HBox>
